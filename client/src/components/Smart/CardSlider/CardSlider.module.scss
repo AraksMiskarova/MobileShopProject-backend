@@ -1,0 +1,65 @@
+.title {
+  color: #000000;
+  font-weight: 600;
+  margin-top: 60px;
+  text-transform: uppercase;
+}
+
+.slick_slider {
+  position: relative;
+  display: block;
+  background-image: url(../../../../public/Bcgr_CardSlider.jpg);
+  max-width: 100%;
+  padding: 20px 35%;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.slick-dots {
+  position: absolute;
+  top: 97%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: #ffffff00;
+
+  [class='slick-active'] button {
+    background-color: #00000080;
+    transition: 1s;
+  }
+}
+
+.slick-dots li {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin: 0 5px;
+  padding: 0;
+}
+
+.slick-dots button {
+  border: 0px;
+  background-color: #00000020;
+  text-indent: -9999px;
+  width: 100%;
+  height: 100%;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.slick-dots button:hover {
+  border: 0px;
+  background-color: #00000080;
+  transition: 0.4s;
+}
+
+.slick-dots button:active {
+  background-color: #000000;
+  transition: 0.2s;
+}

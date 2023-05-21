@@ -1,0 +1,80 @@
+.container {
+  width: 100%;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+  margin-bottom: 70px;
+  .item {
+    width: 380px;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 4px;
+    margin-right: auto;
+    margin-left: 10px;
+    text-align: center;
+    .iconDel {
+      background-color: #ffffff;
+      padding: 5px;
+      border-radius: 4px;
+      width: 80px;
+      height: 80px;
+      background-image: url(../../../../public/deliveryIco.png);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      margin-right: auto;
+      margin-left: auto;
+    }
+    .iconPay {
+      background-color: #ffffff;
+      padding: 5px;
+      border-radius: 4px;
+      width: 80px;
+      height: 80px;
+      background-image: url(../../../../public/payIco.png);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      margin-right: auto;
+      margin-left: auto;
+    }
+    .iconGuar {
+      background-color: #ffffff;
+      padding: 5px;
+      border-radius: 4px;
+      width: 80px;
+      height: 80px;
+      background-image: url(../../../../public/guaranteeIco.png);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      margin-right: auto;
+      margin-left: auto;
+    }
+    .text {
+      padding: 5px;
+      border-radius: 4px;
+      background-color: #ffffff;
+      color: #000000;
+      font-family: 'montserrat', sans-serif;
+      margin-top: 10px;
+    }
+  }
+  & div:first-child {
+    margin-left: 0px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    .item {
+      width: 100%;
+    }
+  }
+
+}

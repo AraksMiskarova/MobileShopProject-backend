@@ -1,0 +1,84 @@
+.form {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: 10px;
+}
+.group {
+  position: relative;
+}
+
+.input {
+  font-size: 16px;
+  padding: 0px;
+  padding-left: 5px;
+  display: block;
+  width: 250px;
+  color: #ffffff;
+  font-family: 'montserrat';
+  border: none;
+  border-bottom: 1px solid #ccc;
+  background-color: #00000000;
+}
+.input:focus {
+  outline: none;
+  font-family: 'montserrat';
+  transition: 0.5s ease all;
+  -moz-transition: 0.5s ease all;
+  -webkit-transition: 0.5s ease all;
+}
+
+.label {
+  color: #ffffff;
+  font-size: 18px;
+  position: absolute;
+  pointer-events: none;
+  font-family: 'montserrat';
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  left: 170px;
+  top: -5px;
+  transition: 0.5s ease all;
+  -moz-transition: 0.5s ease all;
+  -webkit-transition: 0.5s ease all;
+}
+
+.input:focus ~ .label,
+.input:valid ~ .label {
+  top: -15px;
+  left: 190px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: 300;
+  color: #ffffff;
+}
+
+.bar {
+  position: relative;
+  display: block;
+  width: 250px;
+}
+.bar:before,
+.bar:after {
+  content: '';
+  height: 2px;
+  width: 0;
+  bottom: 0;
+  position: absolute;
+  background: #ffffff;
+  transition: 0.5s ease all;
+  -moz-transition: 0.5s ease all;
+  -webkit-transition: 0.5s ease all;
+}
+.bar:before {
+  left: 50%;
+}
+.bar:after {
+  right: 50%;
+}
+
+.input:focus ~ .bar:before,
+.input:focus ~ .bar:after {
+  width: 50%;
+}
