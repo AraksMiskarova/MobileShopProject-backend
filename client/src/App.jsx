@@ -64,7 +64,7 @@ function App() {
     }, 2000);
     return () => clearTimeout(timer); // очищаем таймер при размонтировании компонента
   }, []);
-
+  console.log('test');
   return loading ? (
     <LoadingPage />
   ) : (
