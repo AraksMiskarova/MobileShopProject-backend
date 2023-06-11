@@ -15,6 +15,7 @@ import MenageProducts from './pages/Manage/ManageProducts';
 import SigInPage from './pages/SigInPage/SigInPage';
 import SuccessfulOrder from './pages/SuccessfulOrderPage/SuccessfulOrder';
 import WishlistPage from './pages/WishlistPage/WishlistPage';
+import PersonalAccount from './pages/PersonalAccount/PersonalAccount';
 
 import { fetchCartProducts } from './redux/slices/cartBackEnd';
 import { setSelectedProducts } from './redux/slices/cartLocal';
@@ -81,6 +82,7 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/successful-order" element={<SuccessfulOrder />} />
         <Route path="/menage-products" element={<MenageProducts />} />
+        <Route path="/personal-account" element={<PersonalAccount />} />
       </Routes>
       <Footer />
     </>
