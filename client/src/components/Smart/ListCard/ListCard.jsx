@@ -18,7 +18,7 @@ import style from './ListCard.module.scss';
 import {
   setSelectedProducts,
   stateSelectedProducts,
-} from '../../../redux/slices/shopping-cart';
+} from '../../../redux/slices/cartLocal';
 
 import {
   setSelectedProductsFav,
@@ -26,9 +26,12 @@ import {
 } from '../../../redux/slices/wishList';
 
 import {
+  cartBackState,
   fetchAddProductsCart,
   increaseTotalQuantity,
-} from '../../../redux/slices/cartBack';
+} from '../../../redux/slices/cartBackEnd';
+
+import { isAuthenticated } from '../../../helpers/authentication/authentication';
 
 function ListCard({
   product,
@@ -47,15 +50,7 @@ function ListCard({
   const selectedProducts = useSelector(stateSelectedProducts);
   const selectedProductsFav = useSelector(stateSelectedProductsFav);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(
-    JSON.parse(localStorage.getItem(product.itemNo)) || false,
-  );
-
-  useEffect(() => {
-    setIsDisabled(
-      selectedProducts.some(item => item.itemNo === product.itemNo),
-    );
-  }, [selectedProducts, product.itemNo]);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
     const isExist = selectedProductsFav.find(
@@ -107,12 +102,49 @@ function ListCard({
   };
 
   // *** AUTHORIZED logic ***
-  const isAuth = Boolean(localStorage.getItem('token'));
-  const bearer = localStorage.getItem('token');
+  const isAuth = isAuthenticated();
 
   const handleBuyCartBack = (e, prodId) => {
-    dispatch(fetchAddProductsCart({ token: bearer, productId: prodId }));
+    dispatch(fetchAddProductsCart({ productId: prodId }));
     dispatch(increaseTotalQuantity());
+    setIsDisabled(true);
+  };
+
+  // logic isDisabled button
+
+  const { productsCartBack } = useSelector(cartBackState);
+
+  useEffect(() => {
+    if (isAuth) {
+      if (productsCartBack) {
+        setIsDisabled(
+          productsCartBack.some(item => item.product.itemNo === product.itemNo),
+        );
+      }
+    } else {
+      setIsDisabled(
+        selectedProducts.some(item => item.itemNo === product.itemNo),
+      );
+    }
+  }, [selectedProducts, isAuth, productsCartBack, product.itemNo]);
+
+  // Logic added BrowsingHistory
+
+  const handleAddBrowsingHistory = () => {
+    const prodBrowsingHistory = JSON.parse(
+      localStorage.getItem('prodBrowsingHistory') || '[]',
+    );
+
+    if (prodBrowsingHistory.length === 4) {
+      prodBrowsingHistory.pop();
+    }
+
+    prodBrowsingHistory.unshift(product);
+
+    localStorage.setItem(
+      'prodBrowsingHistory',
+      JSON.stringify(prodBrowsingHistory),
+    );
   };
 
   const isMobile = useMediaQuery('(max-width:1170px)');
@@ -124,12 +156,16 @@ function ListCard({
       sm={sm}
       md={md}
       lg={lg}
-      style={isMobile ? {} : { maxHeight: '440px', marginBottom: '5px' }}
+      style={isMobile ? {} : { maxHeight: '440px' }}
     >
       {' '}
       <Stack spacing={4}>
         <Card className={style.card}>
-          <NavLink to={`/products/${itemNo}`} className={style.mainLink}>
+          <NavLink
+            to={`/products/${itemNo}`}
+            className={style.mainLink}
+            onClick={isAuth && handleAddBrowsingHistory}
+          >
             <CardMedia
               className={style.cardMedia}
               component="img"
@@ -138,7 +174,11 @@ function ListCard({
             />
           </NavLink>
           <CardContent className={style.cardContent}>
-            <NavLink to={`/product/${itemNo}`} className={style.mainLink}>
+            <NavLink
+              to={`/products/${itemNo}`}
+              className={style.mainLink}
+              onClick={isAuth && handleAddBrowsingHistory}
+            >
               <div className={style.typography}>
                 <Typography variant="p">{name}</Typography>
                 <Typography variant="p">{currentPrice}$</Typography>

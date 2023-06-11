@@ -41,7 +41,10 @@ function NavIcon({
         </NavLink>
       </div>
       <div className={style.containerAvatar}>
-        <NavLink to={isAuth ? '/' : '/login'} className={style.link}>
+        <NavLink
+          to={isAuth ? '/personal-account' : '/login'}
+          className={style.link}
+        >
           <AvatarUser
             nameAvatar={nameAvatar}
             avatarSrc={avatarSrc}

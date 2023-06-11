@@ -5,13 +5,18 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-import { fetchUserData } from '../../redux/slices/registr';
-import { fetchUserToken } from '../../redux/slices/auth';
+import { fetchUserData } from '../../redux/slices/registration';
+import { fetchUserToken } from '../../redux/slices/authorization';
 
 import style from './SigInPage.module.scss';
+import { fetchCustomerData } from '../../redux/slices/customer';
+import {
+  fetchAddProductsCart,
+  fetchCartProducts,
+} from '../../redux/slices/cartBackEnd';
 
 function SigInPage() {
   const dispatch = useDispatch();
@@ -60,10 +65,58 @@ function SigInPage() {
           }),
         );
         if (authData) {
-          navigate('/');
-          return window.localStorage.setItem('token', authData.payload);
+          window.localStorage.setItem('token', authData.payload);
+
+          const localCart = JSON.parse(window.localStorage.getItem('products'));
+          if (localCart.length > 0) {
+            const dispatchCalls = index => {
+              return dispatch(
+                fetchAddProductsCart({ productId: localCart[index]._id }),
+              );
+            };
+
+            const executeDispatch = index => {
+              if (index < localCart.length) {
+                return dispatchCalls(index).then(() =>
+                  executeDispatch(index + 1),
+                );
+              }
+              return Promise.resolve();
+            };
+
+            executeDispatch(0)
+              .then(() => {
+                return dispatch(fetchCustomerData());
+              })
+              .then(customer => {
+                const customerData = JSON.stringify(customer.payload._id);
+                window.localStorage.setItem('customer', customerData);
+              })
+              .then(() => {
+                return dispatch(fetchCartProducts());
+              })
+              .then(() => {
+                navigate('/');
+                setStatus(false);
+              })
+              .catch(error => {
+                console.warn('Error fetching customer data:', error);
+              });
+          } else if (!localCart.length > 0) {
+            dispatch(fetchCustomerData())
+              .then(customer => {
+                const customerData = JSON.stringify(customer.payload._id);
+                window.localStorage.setItem('customer', customerData);
+              })
+              .then(() => {
+                return dispatch(fetchCartProducts());
+              })
+              .then(() => {
+                navigate('/');
+                setStatus(false);
+              });
+          }
         }
-        setStatus(false);
       };
       logIn();
     }
@@ -154,9 +207,14 @@ function SigInPage() {
             variant="contained"
             fullWidth
           >
-            SiGN UP
+            {!status ? 'SiGN UP' : 'Loading...'}
           </Button>
         </form>
+        <NavLink to="/login">
+          <Button type="button" size="small" variant="contained">
+            Log In
+          </Button>
+        </NavLink>
       </Paper>
     </div>
   );

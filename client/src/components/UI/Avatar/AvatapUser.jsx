@@ -2,13 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Avatar, Button } from '@mui/material';
 
-function AvatarUser({ nameAvatar, avatarSrc, isAuth, onClickLogOut }) {
+function AvatarUser({
+  nameAvatar,
+  avatarSrc,
+  isAuth,
+  onClickLogOut,
+  isProfil,
+}) {
   const firstLetter = nameAvatar.charAt(0).toUpperCase();
 
   return isAuth ? (
     <>
       <Avatar
-        sx={{ width: 56, height: 56 }}
+        sx={
+          isProfil
+            ? { width: 136, height: 136, fontSize: '65px' }
+            : { width: 56, height: 56 }
+        }
         src={avatarSrc}
         style={{
           marginLeft: 'auto',
@@ -21,15 +31,19 @@ function AvatarUser({ nameAvatar, avatarSrc, isAuth, onClickLogOut }) {
         variant="contained"
         color="secondary"
         onClick={onClickLogOut}
-        style={{
-          borderRadius: 2,
-          fontFamily: 'montserrat',
-          fontSize: 13,
-          fontWeight: 600,
-          padding: 1,
-          marginTop: 10,
-          width: '100%',
-        }}
+        style={
+          isProfil
+            ? { display: 'none' }
+            : {
+                borderRadius: 2,
+                fontFamily: 'montserrat',
+                fontSize: 13,
+                fontWeight: 600,
+                padding: 1,
+                marginTop: 10,
+                width: '100%',
+              }
+        }
       >
         Log Out
       </Button>
@@ -50,8 +64,9 @@ function AvatarUser({ nameAvatar, avatarSrc, isAuth, onClickLogOut }) {
 
 AvatarUser.defaultProps = {
   avatarSrc: '#',
-  nameAvatar: 'Jhon Dou',
+  nameAvatar: 'Alex Dou',
   isAuth: false,
+  isProfil: false,
 };
 
 AvatarUser.propTypes = {
@@ -59,6 +74,7 @@ AvatarUser.propTypes = {
   avatarSrc: PropTypes.string,
   isAuth: PropTypes.bool,
   onClickLogOut: PropTypes.func.isRequired,
+  isProfil: PropTypes.bool,
 };
 
 export default AvatarUser;

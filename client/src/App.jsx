@@ -1,8 +1,8 @@
 import { React, useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-import Navbar from './components/Smart/Navbar/Navbar';
+import Navbar from './components/MultiComponentsIC/Navbar/Navbar';
 import Footer from './components/Simple/Footer/Footer';
 import HomePage from './pages/HomePage/HomePage';
 import CheckoutPage from './pages/Checkout/CheckoutPage';
@@ -14,20 +14,35 @@ import SigInPage from './pages/SigInPage/SigInPage';
 import LoadingPage from './pages/LoadingPage/LoadingPage';
 import ContactPage from './pages/ContactPage/ContactPage';
 import SuccessfulOrder from './pages/SuccessfulOrderPage/SuccessfulOrder';
+import PersonalAccount from './pages/PersonalAccount/PersonalAccount';
 
-import { setSelectedProducts } from './redux/slices/shopping-cart';
+import { setSelectedProducts } from './redux/slices/cartLocal';
 import { setSelectedProductsFav } from './redux/slices/wishList';
-import { fetchCartProducts } from './redux/slices/cartBack';
+import { fetchCartProducts } from './redux/slices/cartBackEnd';
+
+import { isToken } from './helpers/authentication/authentication';
+import { fetchCustomerData } from './redux/slices/customer';
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isAuth = Boolean(localStorage.getItem('token'));
-  const bearer = localStorage.getItem('token');
+  const isHaveToken = isToken();
 
   useEffect(() => {
-    if (isAuth && bearer) {
-      dispatch(fetchCartProducts(bearer));
+    if (isHaveToken) {
+      dispatch(fetchCustomerData())
+        .then(customer => {
+          dispatch(fetchCartProducts());
+          const customerData = JSON.stringify(customer.payload._id);
+          window.localStorage.setItem('customer', customerData);
+        })
+        .catch(error => {
+          console.warn('Error fetching customer data:', error);
+          window.localStorage.removeItem('token');
+          window.localStorage.removeItem('customer');
+          navigate('/login');
+        });
     }
   }, []);
 
@@ -46,7 +61,7 @@ function App() {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 2000);
-    return () => clearTimeout(timer); // очищаем таймер при размонтировании компонента
+    return () => clearTimeout(timer);
   }, []);
 
   return loading ? (
@@ -65,6 +80,7 @@ function App() {
         <Route path="/signup" element={<SigInPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/successful-order" element={<SuccessfulOrder />} />
+        <Route path="/personal-account" element={<PersonalAccount />} />
       </Routes>
       <Footer />
     </>

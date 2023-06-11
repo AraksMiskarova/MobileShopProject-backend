@@ -18,7 +18,6 @@ const queryCreator = require("../commonHelpers/queryCreator");
 
 // Controller for creating customer and saving to DB
 exports.createCustomer = (req, res, next) => {
-  console.log("req.body>>>>>", req.body);
   // Clone query object, because validator module mutates req.body, adding other fields to object
   const initialQuery = _.cloneDeep(req.body);
   initialQuery.customerNo = rand();
@@ -67,7 +66,7 @@ exports.createCustomer = (req, res, next) => {
             .catch((err) =>
               res.status(400).json({
                 message: `Error happened on server: "${err}" `,
-              }),
+              })
             );
         });
       });
@@ -75,7 +74,7 @@ exports.createCustomer = (req, res, next) => {
     .catch((err) =>
       res.status(400).json({
         message: `Error happened on server: "${err}" `,
-      }),
+      })
     );
 };
 
@@ -124,7 +123,7 @@ exports.loginCustomer = async (req, res, next) => {
                 success: true,
                 token: "Bearer " + token,
               });
-            },
+            }
           );
         } else {
           errors.password = "Password incorrect";
@@ -135,7 +134,7 @@ exports.loginCustomer = async (req, res, next) => {
     .catch((err) =>
       res.status(400).json({
         message: `Error happened on server: "${err}" `,
-      }),
+      })
     );
 };
 
@@ -202,19 +201,19 @@ exports.editCustomerInfo = (req, res) => {
       Customer.findOneAndUpdate(
         { _id: req.user.id },
         { $set: updatedCustomer },
-        { new: true },
+        { new: true }
       )
         .then((customer) => res.json(customer))
         .catch((err) =>
           res.status(400).json({
             message: `Error happened on server: "${err}" `,
-          }),
+          })
         );
     })
     .catch((err) =>
       res.status(400).json({
         message: `Error happened on server:"${err}" `,
-      }),
+      })
     );
 };
 
@@ -249,7 +248,7 @@ exports.updatePassword = (req, res) => {
                   password: newPassword,
                 },
               },
-              { new: true },
+              { new: true }
             )
               .then((customer) => {
                 res.json({
@@ -260,7 +259,7 @@ exports.updatePassword = (req, res) => {
               .catch((err) =>
                 res.status(400).json({
                   message: `Error happened on server: "${err}" `,
-                }),
+                })
               );
           });
         });
