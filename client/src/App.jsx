@@ -11,7 +11,7 @@ import ItemCardPage from './pages/ItemCardPage/ItemCardPage';
 import ItemsListPage from './pages/ItemsListPage/ItemsListPage';
 import LoadingPage from './pages/LoadingPage/LoadingPage';
 import LogInPage from './pages/LogInPage/LogInPage';
-import MenageProducts from './pages/Manage/ManageProducts';
+import ManageProducts from './pages/Manage/ManageProducts';
 import SigInPage from './pages/SigInPage/SigInPage';
 import SuccessfulOrder from './pages/SuccessfulOrderPage/SuccessfulOrder';
 import WishlistPage from './pages/WishlistPage/WishlistPage';
@@ -81,9 +81,10 @@ function App() {
         <Route path="/signup" element={<SigInPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/successful-order" element={<SuccessfulOrder />} />
-        <Route path="/menage-products" element={<MenageProducts />} />
         <Route path="/personal-account" element={<PersonalAccount />} />
+        <Route path="manage-products" element={<ManageProducts />} />
       </Routes>
+
       <Footer />
     </>
   );

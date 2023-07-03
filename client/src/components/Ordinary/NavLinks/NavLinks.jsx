@@ -46,6 +46,9 @@ function NavLinks({
           <NavLink to="/contact" className={style.link}>
             <ButtonNav label="Contact" />
           </NavLink>
+          <NavLink to="/manage-products" className={style.link}>
+            <ButtonNav label="Manage products" />
+          </NavLink>
         </div>
       ) : (
         <div className={style.rootMob}>
@@ -97,6 +100,11 @@ function NavLinks({
             >
               <NavLink to="/contact" className={style.link}>
                 <ButtonNav label="Contact" />
+              </NavLink>
+            </MenuItem>
+            <MenuItem onClick={handleClose} style={{ marginLeft: '25px' }}>
+              <NavLink to="/manage-products" className={style.link}>
+                <ButtonNav label="Manage products" />
               </NavLink>
             </MenuItem>
             <MenuItem onClick={handleClose} style={{ marginBottom: 20 }}>

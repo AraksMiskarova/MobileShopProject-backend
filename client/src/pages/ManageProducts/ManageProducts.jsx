@@ -1,8 +1,7 @@
+import React from 'react';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-
-import React from 'react';
 import ProductList from '../../components/MultiComponentsIC/ProductList/ProductList';
 
 function a11yProps(index) {
@@ -39,9 +38,8 @@ function ManageProducts() {
         <Tab label="Product" {...a11yProps(0)} />
         <Tab label="Users" {...a11yProps(1)} />
       </Tabs>
-      <ProductList />
+      <ProductList value={value} />
     </Box>
   );
 }
-
 export default ManageProducts;

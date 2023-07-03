@@ -1,69 +1,33 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import IconButton from '@mui/material/IconButton';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import PropTypes from 'prop-types';
-import React from 'react';
+import { Container } from '@mui/material';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchFilterPhones,
+  filterProdState,
+} from '../../../redux/slices/filterProducts';
+import TableProducts from './TableProducts';
+import style from './ProductList.module.scss';
 
-function TableProducts({ items }) {
+function ProductList() {
+  const dispatch = useDispatch();
+  const selectedProducts = useSelector(filterProdState);
+  const urlParams = new URLSearchParams();
+
+  useEffect(() => {
+    const url = decodeURIComponent(urlParams.toString().replace(/%2C/g, ','));
+    dispatch(fetchFilterPhones(url));
+  }, []);
+
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Id</TableCell>
-            <TableCell align="right">
-              <b>Brand</b>
-            </TableCell>
-            <TableCell align="left">Name</TableCell>
-            <TableCell align="left">Date</TableCell>
-            <TableCell align="right">Edit</TableCell>
-            <TableCell align="right">Delete</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {items.map(row => (
-            <TableRow
-              key={row.itemNo}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.itemNo}
-              </TableCell>
-              <TableCell align="right">{row.brand}</TableCell>
-              <TableCell align="left">{row.name}</TableCell>
-              <TableCell align="left">{row.date}</TableCell>
-              <TableCell align="right">
-                <IconButton edge="end" aria-label="comments">
-                  <ModeEditIcon />
-                </IconButton>
-              </TableCell>
-              <TableCell align="right">
-                <IconButton edge="end" aria-label="comments">
-                  <DeleteIcon />+
-                </IconButton>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    //eslint-disable-next-line react/react-in-jsx-scope
+    <Container maxWidth="lg" className={style.container}>
+      {!selectedProducts?.products?.products && 'loading'}
+      {selectedProducts?.products?.products && (
+        //eslint-disable-next-line react/react-in-jsx-scope
+        <TableProducts items={selectedProducts.products.products} />
+      )}
+    </Container>
   );
 }
-const itemPropType = PropTypes.shape({
-  itemNo: PropTypes.string,
-});
-const itemsPropType = PropTypes.arrayOf(itemPropType);
 
-TableProducts.propTypes = {
-  // eslint-disable-next-line react/require-default-props
-  items: itemsPropType,
-};
-
-export default TableProducts;
+export default ProductList;
