@@ -19,11 +19,9 @@ function ProductList() {
   }, []);
 
   return (
-    //eslint-disable-next-line react/react-in-jsx-scope
     <Container maxWidth="lg" className={style.container}>
       {!selectedProducts?.products?.products && 'loading'}
       {selectedProducts?.products?.products && (
-        //eslint-disable-next-line react/react-in-jsx-scope
         <TableProducts items={selectedProducts.products.products} />
       )}
     </Container>

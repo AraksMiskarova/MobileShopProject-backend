@@ -11,7 +11,7 @@ import { fetchUserToken } from '../../redux/slices/authorization';
 
 import style from './LogInpage.module.scss';
 import {
-  // fetchAddProductsCart,
+  fetchAddProductsCart,
   fetchCartProducts,
 } from '../../redux/slices/cartBackEnd';
 import { fetchCustomerData } from '../../redux/slices/customer';
