@@ -20,7 +20,6 @@ function ManageProducts() {
     setValue(newValue);
   };
 
-  console.log('value', value);
   return (
     <Box
       sx={{
