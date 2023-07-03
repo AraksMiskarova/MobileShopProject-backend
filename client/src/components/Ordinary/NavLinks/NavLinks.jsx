@@ -7,7 +7,7 @@ import { useMediaQuery, IconButton, Menu, MenuItem } from '@mui/material';
 import ButtonNav from '../../UI/Buttons/ButtonNav/ButtonNav';
 import NavIcon from '../../Simple/NavIcon/NavIcon';
 import MobileModalSearch from '../../MultiComponentsIC/MobileModalSearch/MobileModalSearch';
-
+import { useAccess } from '../../../hook/useAccess';
 import style from './NavLinks.module.scss';
 
 function NavLinks({
@@ -19,7 +19,8 @@ function NavLinks({
   onClickOpenDrawer,
 }) {
   const isMobile = useMediaQuery('(max-width:768px)');
-
+  const { isAdmin } = useAccess();
+  const permission = isAdmin();
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleOpen = event => {
@@ -46,9 +47,11 @@ function NavLinks({
           <NavLink to="/contact" className={style.link}>
             <ButtonNav label="Contact" />
           </NavLink>
-          <NavLink to="/manage-products" className={style.link}>
-            <ButtonNav label="Manage products" />
-          </NavLink>
+          {permission && (
+            <NavLink to="/manage-products" className={style.link}>
+              <ButtonNav label="Manage products" />
+            </NavLink>
+          )}
         </div>
       ) : (
         <div className={style.rootMob}>
@@ -102,11 +105,13 @@ function NavLinks({
                 <ButtonNav label="Contact" />
               </NavLink>
             </MenuItem>
-            <MenuItem onClick={handleClose} style={{ marginLeft: '25px' }}>
-              <NavLink to="/manage-products" className={style.link}>
-                <ButtonNav label="Manage products" />
-              </NavLink>
-            </MenuItem>
+            {permission && (
+              <MenuItem onClick={handleClose} style={{ marginLeft: '25px' }}>
+                <NavLink to="/manage-products" className={style.link}>
+                  <ButtonNav label="Manage products" />
+                </NavLink>
+              </MenuItem>
+            )}
             <MenuItem onClick={handleClose} style={{ marginBottom: 20 }}>
               <NavIcon
                 favCount={favCount}

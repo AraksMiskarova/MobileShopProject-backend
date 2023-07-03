@@ -66,7 +66,7 @@ exports.createCustomer = (req, res, next) => {
             .catch((err) =>
               res.status(400).json({
                 message: `Error happened on server: "${err}" `,
-              }),
+              })
             );
         });
       });
@@ -74,7 +74,7 @@ exports.createCustomer = (req, res, next) => {
     .catch((err) =>
       res.status(400).json({
         message: `Error happened on server: "${err}" `,
-      }),
+      })
     );
 };
 
@@ -123,7 +123,7 @@ exports.loginCustomer = async (req, res, next) => {
                 success: true,
                 token: "Bearer " + token,
               });
-            },
+            }
           );
         } else {
           errors.password = "Password incorrect";
@@ -134,7 +134,7 @@ exports.loginCustomer = async (req, res, next) => {
     .catch((err) =>
       res.status(400).json({
         message: `Error happened on server: "${err}" `,
-      }),
+      })
     );
 };
 
@@ -201,19 +201,19 @@ exports.editCustomerInfo = (req, res) => {
       Customer.findOneAndUpdate(
         { _id: req.user.id },
         { $set: updatedCustomer },
-        { new: true },
+        { new: true }
       )
         .then((customer) => res.json(customer))
         .catch((err) =>
           res.status(400).json({
             message: `Error happened on server: "${err}" `,
-          }),
+          })
         );
     })
     .catch((err) =>
       res.status(400).json({
         message: `Error happened on server:"${err}" `,
-      }),
+      })
     );
 };
 
@@ -248,7 +248,7 @@ exports.updatePassword = (req, res) => {
                   password: newPassword,
                 },
               },
-              { new: true },
+              { new: true }
             )
               .then((customer) => {
                 res.json({
@@ -259,11 +259,36 @@ exports.updatePassword = (req, res) => {
               .catch((err) =>
                 res.status(400).json({
                   message: `Error happened on server: "${err}" `,
-                }),
+                })
               );
           });
         });
       }
     });
   });
+};
+
+// Controller for getting customers
+exports.getCustomers = (req, res) => {
+  Customer.find()
+    .then((customer) => {
+      const responseUsers = [];
+      customer.forEach((customer) => {
+        responseUsers.push({
+          customerNo: customer.customerNo,
+          email: customer.email,
+          enabled: customer.enabled,
+          firstName: customer.firstName,
+          isAdmin: customer.isAdmin,
+          lastName: customer.lastName,
+          login: customer.login,
+        });
+      });
+      res.json(responseUsers);
+    })
+    .catch((err) => {
+      res.status(400).json({
+        message: `Error happened on server: "${err}" `,
+      });
+    });
 };
