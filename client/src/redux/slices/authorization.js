@@ -11,7 +11,8 @@ export const fetchUserToken = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       });
-      const { token } = data;
+      const { token, refreshToken } = data;
+      localStorage.setItem('refreshToken', refreshToken);
       return token;
     } catch (error) {
       return error;

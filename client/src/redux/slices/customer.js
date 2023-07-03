@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-// import axios from '../../axios';
+import api from '../../helpers/toolkit/api';
 import { fetchData } from '../../helpers/toolkit/fetches';
 import { createAsyncReducer } from '../../helpers/toolkit/extraReducers';
 
@@ -11,7 +11,10 @@ export const fetchCustomerData = createAsyncThunk(
 );
 
 export const getCustomers = createAsyncThunk('customer', async () => {
-  return fetchData(`/api/customers`, 'get');
+  // eslint-disable-next-line no-return-await
+  return await api.get('api/customers').then(response => {
+    return response.data;
+  });
 });
 
 const initialState = {
