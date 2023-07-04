@@ -17,9 +17,9 @@ const validateRegistrationForm = require("../validation/validationHelper");
 const queryCreator = require("../commonHelpers/queryCreator");
 // Load Session model
 const sessions = require("../models/Session");
-
 // Controller for creating customer and saving to DB
 exports.createCustomer = (req, res, next) => {
+  console.log("req.body>>>>>", req.body);
   // Clone query object, because validator module mutates req.body, adding other fields to object
   const initialQuery = _.cloneDeep(req.body);
   initialQuery.customerNo = rand();
@@ -49,7 +49,7 @@ exports.createCustomer = (req, res, next) => {
         }
       }
 
-      // Create query object for customer for saving him to DB
+      // Create query object for qustomer for saving him to DB
       const newCustomer = new Customer(queryCreator(initialQuery));
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newCustomer.password, salt, (err, hash) => {
@@ -116,15 +116,18 @@ exports.loginCustomer = async (req, res, next) => {
           }; // Create JWT Payload
 
           // Sign Token
-          const token = jwt.sign(payload, keys.secretOrKey, { expiresIn: 60 });
+          const token = jwt.sign(payload, keys.secretOrKey, { expiresIn: 50 });
+
           const newSession = await sessions.create({
             sid: customer._id,
           });
+
           // Create JWTRefresh
           const payloadRefresh = {
             uid: customer.id,
             sid: newSession._id,
           };
+
           const refreshToken = jwt.sign(payloadRefresh, keys.secretOrKey, {
             expiresIn: 2678400,
           });
