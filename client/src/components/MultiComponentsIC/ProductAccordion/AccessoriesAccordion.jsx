@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -191,7 +190,7 @@ function AccessoriesAccordion() {
                   <Typography>Catrgories</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Box style={{ display: 'flex', flexDirection: 'colomn' }}>
+                  <Box style={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography>
                       <FormControlLabel
                         control={

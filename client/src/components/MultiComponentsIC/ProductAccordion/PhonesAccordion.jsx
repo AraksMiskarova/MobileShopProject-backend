@@ -223,7 +223,7 @@ function PhonesAccordion() {
                   <Typography>Brand</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Box style={{ display: 'flex', flexDirection: 'colomn' }}>
+                  <Box style={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography>
                       <FormControlLabel
                         control={
