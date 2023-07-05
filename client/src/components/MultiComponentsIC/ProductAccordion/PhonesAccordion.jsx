@@ -2,7 +2,7 @@ import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { FormControlLabel, FormGroup, useMediaQuery } from '@mui/material';
+import { Box, FormControlLabel, FormGroup, useMediaQuery } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -21,8 +21,6 @@ import {
   setMostPrice,
   setLeastPrice,
 } from '../../../redux/slices/filterProducts';
-
-import style from './ProductAccordion.module.scss';
 
 function PhonesAccordion() {
   const location = useLocation();
@@ -205,9 +203,9 @@ function PhonesAccordion() {
 
   return (
     <FormGroup>
-      <div>
+      <Box>
         <Accordion
-          className={style.accordion}
+          style={{ maxWidth: '100%' }}
           expanded={expanded === 0}
           onChange={handleChange(0)}
         >
@@ -215,9 +213,9 @@ function PhonesAccordion() {
             <Typography>Phones</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <div>
+            <Box>
               <Accordion
-                className={style.accordion}
+                style={{ maxWidth: '100%' }}
                 expanded={expanded === 0}
                 onChange={handleChange(0)}
               >
@@ -225,8 +223,8 @@ function PhonesAccordion() {
                   <Typography>Brand</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <div className={style.checkbox}>
-                    <span>
+                  <Box style={{ display: 'flex', flexDirection: 'colomn' }}>
+                    <Typography>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -247,8 +245,8 @@ function PhonesAccordion() {
                         label="Apple"
                         style={{ marginLeft: '0px' }}
                       />
-                    </span>
-                    <span>
+                    </Typography>
+                    <Typography>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -269,8 +267,8 @@ function PhonesAccordion() {
                         label="Samsung"
                         style={{ marginLeft: '0px' }}
                       />
-                    </span>
-                    <span>
+                    </Typography>
+                    <Typography>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -291,8 +289,8 @@ function PhonesAccordion() {
                         label="Huawei"
                         style={{ marginLeft: '0px' }}
                       />
-                    </span>
-                    <span>
+                    </Typography>
+                    <Typography>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -313,12 +311,12 @@ function PhonesAccordion() {
                         label="Xiaomi"
                         style={{ marginLeft: '0px' }}
                       />
-                    </span>
-                  </div>
+                    </Typography>
+                  </Box>
                 </AccordionDetails>
               </Accordion>
               <Accordion
-                className={style.accordion}
+                style={{ maxWidth: '100%' }}
                 expanded={expanded === 0}
                 onChange={handleChange(0)}
               >
@@ -329,13 +327,13 @@ function PhonesAccordion() {
                   <PriceSlider />
                 </AccordionDetails>
               </Accordion>
-              <Accordion className={style.accordion}>
+              <Accordion style={{ maxWidth: '100%' }}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <Typography>Phone memory capacity</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <div className={style.checkbox}>
-                    <span>
+                  <Box style={{ display: 'flex', flexDirection: 'column' }}>
+                    <Typography>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -359,8 +357,8 @@ function PhonesAccordion() {
                         label="128GB"
                         style={{ marginLeft: '0px' }}
                       />
-                    </span>
-                    <span>
+                    </Typography>
+                    <Typography>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -384,8 +382,8 @@ function PhonesAccordion() {
                         label="256GB"
                         style={{ marginLeft: '0px' }}
                       />
-                    </span>
-                    <span>
+                    </Typography>
+                    <Typography>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -409,17 +407,17 @@ function PhonesAccordion() {
                         label="512GB"
                         style={{ marginLeft: '0px' }}
                       />
-                    </span>
-                  </div>
+                    </Typography>
+                  </Box>
                 </AccordionDetails>
               </Accordion>
-              <Accordion className={style.accordion}>
+              <Accordion style={{ maxWidth: '100%' }}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <Typography>Display</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <div className={style.checkbox}>
-                    <span>
+                  <Box style={{ display: 'flex', flexDirection: 'column' }}>
+                    <Typography>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -443,8 +441,8 @@ function PhonesAccordion() {
                         label="LCD"
                         style={{ marginLeft: '0px' }}
                       />
-                    </span>
-                    <span>
+                    </Typography>
+                    <Typography>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -468,8 +466,8 @@ function PhonesAccordion() {
                         label="OLED"
                         style={{ marginLeft: '0px' }}
                       />
-                    </span>
-                    <span>
+                    </Typography>
+                    <Typography>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -493,8 +491,8 @@ function PhonesAccordion() {
                         label="AMOLED"
                         style={{ marginLeft: '0px' }}
                       />
-                    </span>
-                    <span>
+                    </Typography>
+                    <Typography>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -518,17 +516,17 @@ function PhonesAccordion() {
                         label="Retina"
                         style={{ marginLeft: '0px' }}
                       />
-                    </span>
-                  </div>
+                    </Typography>
+                  </Box>
                 </AccordionDetails>
               </Accordion>
-              <Accordion className={style.accordion}>
+              <Accordion style={{ maxWidth: '100%' }}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <Typography>Color</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <div className={style.checkbox}>
-                    <span>
+                  <Box style={{ display: 'flex', flexDirection: 'column' }}>
+                    <Typography>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -549,8 +547,8 @@ function PhonesAccordion() {
                         label="Black"
                         style={{ marginLeft: '0px' }}
                       />
-                    </span>
-                    <span>
+                    </Typography>
+                    <Typography>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -571,8 +569,8 @@ function PhonesAccordion() {
                         label="White"
                         style={{ marginLeft: '0px' }}
                       />
-                    </span>
-                    <span>
+                    </Typography>
+                    <Typography>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -593,14 +591,14 @@ function PhonesAccordion() {
                         label="Other"
                         style={{ marginLeft: '0px' }}
                       />
-                    </span>
-                  </div>
+                    </Typography>
+                  </Box>
                 </AccordionDetails>
               </Accordion>
-            </div>
+            </Box>
           </AccordionDetails>
         </Accordion>
-      </div>
+      </Box>
     </FormGroup>
   );
 }

@@ -3,7 +3,7 @@ import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { FormControlLabel, FormGroup, useMediaQuery } from '@mui/material';
+import { Box, FormControlLabel, FormGroup, useMediaQuery } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -22,8 +22,6 @@ import {
   setMostPrice,
   setLeastPrice,
 } from '../../../redux/slices/filterProducts';
-
-import style from './ProductAccordion.module.scss';
 
 function AccessoriesAccordion() {
   const location = useLocation();
@@ -173,9 +171,9 @@ function AccessoriesAccordion() {
 
   return (
     <FormGroup>
-      <div>
+      <Box>
         <Accordion
-          className={style.accordion}
+          style={{ maxWidth: '100%' }}
           expanded={expanded === 0}
           onChange={handleChange(0)}
         >
@@ -183,9 +181,9 @@ function AccessoriesAccordion() {
             <Typography>Accessories</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <div>
+            <Box>
               <Accordion
-                className={style.accordion}
+                style={{ maxWidth: '100%' }}
                 expanded={expanded === 0}
                 onChange={handleChange(0)}
               >
@@ -193,8 +191,8 @@ function AccessoriesAccordion() {
                   <Typography>Catrgories</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <div className={style.checkbox}>
-                    <span>
+                  <Box style={{ display: 'flex', flexDirection: 'colomn' }}>
+                    <Typography>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -218,8 +216,8 @@ function AccessoriesAccordion() {
                         label="Headphones"
                         style={{ marginLeft: '0px' }}
                       />
-                    </span>
-                    <span>
+                    </Typography>
+                    <Typography>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -243,8 +241,8 @@ function AccessoriesAccordion() {
                         label="Charger"
                         style={{ marginLeft: '0px' }}
                       />
-                    </span>
-                    <span>
+                    </Typography>
+                    <Typography>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -268,12 +266,12 @@ function AccessoriesAccordion() {
                         label="Cases"
                         style={{ marginLeft: '0px' }}
                       />
-                    </span>
-                  </div>
+                    </Typography>
+                  </Box>
                 </AccordionDetails>
               </Accordion>
               <Accordion
-                className={style.accordion}
+                style={{ maxWidth: '100%' }}
                 expanded={expanded === 0}
                 onChange={handleChange(0)}
               >
@@ -284,13 +282,13 @@ function AccessoriesAccordion() {
                   <PriceSlider />
                 </AccordionDetails>
               </Accordion>
-              <Accordion className={style.accordion}>
+              <Accordion style={{ maxWidth: '100%' }}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <Typography>Color</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <div className={style.checkbox}>
-                    <span>
+                  <Box style={{ display: 'flex', flexDirection: 'column' }}>
+                    <Typography>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -311,8 +309,8 @@ function AccessoriesAccordion() {
                         label="Black"
                         style={{ marginLeft: '0px' }}
                       />
-                    </span>
-                    <span>
+                    </Typography>
+                    <Typography>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -333,8 +331,8 @@ function AccessoriesAccordion() {
                         label="White"
                         style={{ marginLeft: '0px' }}
                       />
-                    </span>
-                    <span>
+                    </Typography>
+                    <Typography>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -355,14 +353,14 @@ function AccessoriesAccordion() {
                         label="Other"
                         style={{ marginLeft: '0px' }}
                       />
-                    </span>
-                  </div>
+                    </Typography>
+                  </Box>
                 </AccordionDetails>
               </Accordion>
-            </div>
+            </Box>
           </AccordionDetails>
         </Accordion>
-      </div>
+      </Box>
     </FormGroup>
   );
 }
