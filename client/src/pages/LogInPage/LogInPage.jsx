@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import React, { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
@@ -113,7 +113,7 @@ function LogInPage() {
   });
 
   return (
-    <div className={style.logInBcgr}>
+    <div className={style.logInBcgr} data-testid="loginPage">
       <Paper className={style.logInPage} elevation={0}>
         <Typography
           className={style.title}

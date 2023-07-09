@@ -26,18 +26,25 @@ function Footer() {
       </div>
       <div className={style.icons}>
         <InstagramIcon
+          data-testid="InstagramIcon"
           color="secondary"
           style={{ fontSize: 50, marginRight: 25 }}
         />
         <TelegramIcon
+          data-testid="TelegramIcon"
           color="secondary"
           style={{ fontSize: 50, marginRight: 25 }}
         />
         <YouTubeIcon
+          data-testid="YouTubeIcon"
           color="secondary"
           style={{ fontSize: 50, marginRight: 25 }}
         />
-        <EmailIcon color="secondary" style={{ fontSize: 50 }} />
+        <EmailIcon
+          data-testid="EmailIcon"
+          color="secondary"
+          style={{ fontSize: 50 }}
+        />
       </div>
       <div className={style.address}>
         <p>Kyiv, Ukraine</p>
