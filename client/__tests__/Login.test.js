@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import configureStore from 'redux-mock-store';
@@ -26,7 +26,14 @@ describe('LogInPage', () => {
       </Provider>,
     );
 
+    const visibilityOffToggle = screen.getByTestId('visibilityOffToggle');
+    fireEvent.click(visibilityOffToggle);
+
     // Assertions
+    const passwordInput = screen.getByLabelText(/password/i);
     expect(screen.getByTestId('loginPage')).toBeInTheDocument();
+    expect(passwordInput).toBeInTheDocument();
+    expect(passwordInput).toHaveAttribute('type', 'text');
+    expect(screen.getByLabelText(/E-Mail/i)).toBeInTheDocument();
   });
 });

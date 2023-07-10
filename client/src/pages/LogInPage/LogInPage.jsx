@@ -145,11 +145,13 @@ function LogInPage() {
                   {' '}
                   {togglePassword ? (
                     <VisibilityIcon
+                      data-testid="visibilityToggle"
                       className={style.cursor_pointer}
                       onClick={toggleData}
                     />
                   ) : (
                     <VisibilityOffIcon
+                      data-testid="visibilityOffToggle"
                       className={style.cursor_pointer}
                       onClick={toggleData}
                     />
