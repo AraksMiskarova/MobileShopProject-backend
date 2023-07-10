@@ -1,19 +1,54 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import { Grid, Stack, Typography, Divider, Box } from '@mui/material';
 import ShoppingCartItem from '../../Smart/ShoppingCartItem/ShoppingCartItem';
 import {
   stateSelectedProducts,
   toggleDrawer,
 } from '../../../redux/slices/cartLocal';
+
 import FooterShoppingCart from '../../Simple/FooterShoppingCart/FooterShoppingCart';
-import style from './ProductOrderInfo.module.scss';
 import ButtonsCheckoutPage from '../../UI/Buttons/ButtonsCheckoutPage/ButtonsCheckoutPage';
 import { checkoutState, fetchNewOrder } from '../../../redux/slices/checkout';
 import { cartBackState } from '../../../redux/slices/cartBackEnd';
 
 import { isAuthenticated } from '../../../helpers/authentication/authentication';
+
+const ContainerInfo = styled(Grid)`
+  background-color: #ffffff;
+  padding: 0 5px;
+`;
+
+const ContainerItems = styled(Grid)`
+  padding: 10 5px 30px;
+`;
+
+const Title = styled(Typography)`
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+`;
+
+const SectionComponent = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  padding: 10px 5px;
+`;
+
+const SectionTitle = styled(Typography)`
+  font-size: 16px;
+  font-weight: 600;
+  padding: 5px;
+`;
+
+const SectionInfo = styled(Typography)`
+  font-size: 16px;
+  font-weight: 400;
+  padding: 5px;
+`;
 
 function ProductOrderInfo() {
   const isAuth = isAuthenticated();
@@ -160,11 +195,9 @@ function ProductOrderInfo() {
     };
   }, []);
   return (
-    <Grid container className={style.container}>
-      <Grid item xs={isSmallScreen ? 12 : 6} className={style.ItemContainer}>
-        <Typography variant="h6" className={style.title}>
-          Cart Products
-        </Typography>
+    <ContainerInfo container>
+      <ContainerItems item xs={isSmallScreen ? 12 : 6}>
+        <Title variant="h6">Cart Products</Title>
         <Divider />
         {isAuth ? (
           productsCartBack &&
@@ -188,83 +221,102 @@ function ProductOrderInfo() {
         )}
 
         <FooterShoppingCart amount={result} />
-      </Grid>
-      <Grid item xs={isSmallScreen ? 12 : 6} className={style.ItemContainer}>
-        <Typography variant="h6" className={style.title}>
-          Order Information
-        </Typography>
+      </ContainerItems>
+      <ContainerItems item xs={isSmallScreen ? 12 : 6}>
+        <Title variant="h6">Order Information</Title>
         <Divider />
-        <Box className={style.section__contacts}>
-          <Typography variant="h6" className={style.section__contacts__tittle}>
+        <SectionComponent>
+          <SectionTitle variant="h6" style={{ fontWeight: '600' }}>
             Contacts:
-          </Typography>
-          <Typography
-            className={style.section__contacts__info}
-            style={!nameBool ? { color: 'red' } : {}}
+          </SectionTitle>
+          <SectionInfo
+            style={
+              !nameBool
+                ? { color: 'red', fontSize: '16px' }
+                : { fontSize: '16px' }
+            }
             variant="p"
           >
             Name: {nameBool ? contactsForm.firstName : ' Not entered'}
-          </Typography>
-          <Typography
-            className={style.section__contacts__info}
-            style={!surnameBool ? { color: 'red' } : {}}
+          </SectionInfo>
+          <SectionInfo
+            style={
+              !surnameBool
+                ? { color: 'red', fontSize: '16px' }
+                : { fontSize: '16px' }
+            }
             variant="p"
           >
             Surname: {surnameBool ? contactsForm.lastName : ' Not entered'}
-          </Typography>
-          <Typography
-            className={style.section__contacts__info}
-            style={!emailBool ? { color: 'red' } : {}}
+          </SectionInfo>
+          <SectionInfo
+            style={
+              !emailBool
+                ? { color: 'red', fontSize: '16px' }
+                : { fontSize: '16px' }
+            }
             variant="p"
           >
             Email: {emailBool ? contactsForm.email : ' Not entered'}
-          </Typography>
-          <Typography
-            className={style.section__contacts__info}
-            style={!phoneBool ? { color: 'red' } : {}}
+          </SectionInfo>
+          <SectionInfo
+            style={
+              !phoneBool
+                ? { color: 'red', fontSize: '16px' }
+                : { fontSize: '16px' }
+            }
             variant="p"
           >
             PhoneNumber:
             {phoneBool ? contactsForm.phoneNumber : ' Not entered'}
-          </Typography>
-        </Box>
+          </SectionInfo>
+        </SectionComponent>
         <Divider />
-        <Box className={style.section__delivery}>
-          <Typography variant="h6" className={style.section__delivery__tittle}>
+        <SectionComponent>
+          <SectionTitle variant="h6" style={{ fontWeight: '600' }}>
             Delivery and Payment:
-          </Typography>
-          <Typography
-            className={style.section__delivery__info}
-            style={!countryBool ? { color: 'red' } : {}}
+          </SectionTitle>
+          <SectionInfo
+            style={
+              !countryBool
+                ? { color: 'red', fontSize: '16px' }
+                : { fontSize: '16px' }
+            }
             variant="p"
           >
             Country: {countryBool ? deliveryAddress.country : ' Not entered'}
-          </Typography>
-          <Typography
-            className={style.section__delivery__info}
-            style={!addressBool ? { color: 'red' } : {}}
+          </SectionInfo>
+          <SectionInfo
+            style={
+              !addressBool
+                ? { color: 'red', fontSize: '16px' }
+                : { fontSize: '16px' }
+            }
             variant="p"
           >
             Address: {addressBool ? deliveryAddress.address : ' Not entered'}
-          </Typography>
-          <Typography
-            className={style.section__delivery__info}
-            style={!postalBool ? { color: 'red' } : {}}
+          </SectionInfo>
+          <SectionInfo
+            style={
+              !postalBool
+                ? { color: 'red', fontSize: '16px' }
+                : { fontSize: '16px' }
+            }
             variant="p"
           >
             Postal:
             {postalBool ? deliveryAddress.postal : ' Not entered'}
-          </Typography>
-          <Typography className={style.section__delivery__info} variant="p">
+          </SectionInfo>
+          <SectionInfo variant="p" style={{ fontSize: '16px' }}>
             Delivery method:
             {deliveryMethod ?? ' Not entered'}
-          </Typography>
-          <Typography className={style.section__delivery__info} variant="p">
+          </SectionInfo>
+          <SectionInfo variant="p" style={{ fontSize: '16px' }}>
             Payment method:
             {paymentMethod ?? ' Not entered'}
-          </Typography>
-        </Box>
-      </Grid>
+          </SectionInfo>
+        </SectionComponent>
+      </ContainerItems>
       <Grid item xs={12}>
         <Stack
           sx={{
@@ -288,7 +340,7 @@ function ProductOrderInfo() {
           />
         </Stack>
       </Grid>
-    </Grid>
+    </ContainerInfo>
   );
 }
 export default ProductOrderInfo;

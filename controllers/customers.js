@@ -15,9 +15,11 @@ const validateRegistrationForm = require("../validation/validationHelper");
 
 // Load helper for creating correct query to save customer to DB
 const queryCreator = require("../commonHelpers/queryCreator");
-
+// Load Session model
+const sessions = require("../models/Session");
 // Controller for creating customer and saving to DB
 exports.createCustomer = (req, res, next) => {
+  console.log("req.body>>>>>", req.body);
   // Clone query object, because validator module mutates req.body, adding other fields to object
   const initialQuery = _.cloneDeep(req.body);
   initialQuery.customerNo = rand();
@@ -103,7 +105,7 @@ exports.loginCustomer = async (req, res, next) => {
       }
 
       // Check Password
-      bcrypt.compare(password, customer.password).then((isMatch) => {
+      bcrypt.compare(password, customer.password).then(async (isMatch) => {
         if (isMatch) {
           // Customer Matched
           const payload = {
@@ -114,17 +116,27 @@ exports.loginCustomer = async (req, res, next) => {
           }; // Create JWT Payload
 
           // Sign Token
-          jwt.sign(
-            payload,
-            keys.secretOrKey,
-            { expiresIn: 36000 },
-            (err, token) => {
-              res.json({
-                success: true,
-                token: "Bearer " + token,
-              });
-            }
-          );
+          const token = jwt.sign(payload, keys.secretOrKey, { expiresIn: 50 });
+
+          const newSession = await sessions.create({
+            sid: customer._id,
+          });
+
+          // Create JWTRefresh
+          const payloadRefresh = {
+            uid: customer.id,
+            sid: newSession._id,
+          };
+
+          const refreshToken = jwt.sign(payloadRefresh, keys.secretOrKey, {
+            expiresIn: 2678400,
+          });
+
+          return res.json({
+            success: true,
+            token: "Bearer " + token,
+            refreshToken: refreshToken,
+          });
         } else {
           errors.password = "Password incorrect";
           return res.status(400).json(errors);
@@ -266,4 +278,29 @@ exports.updatePassword = (req, res) => {
       }
     });
   });
+};
+
+// Controller for getting customers
+exports.getCustomers = (req, res) => {
+  Customer.find()
+    .then((customer) => {
+      const responseUsers = [];
+      customer.forEach((customer) => {
+        responseUsers.push({
+          customerNo: customer.customerNo,
+          email: customer.email,
+          enabled: customer.enabled,
+          firstName: customer.firstName,
+          isAdmin: customer.isAdmin,
+          lastName: customer.lastName,
+          login: customer.login,
+        });
+      });
+      res.json(responseUsers);
+    })
+    .catch((err) => {
+      res.status(400).json({
+        message: `Error happened on server: "${err}" `,
+      });
+    });
 };

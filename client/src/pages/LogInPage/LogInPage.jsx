@@ -1,10 +1,14 @@
-import { React, useState } from 'react';
+import React, { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { useForm } from 'react-hook-form';
 import { useNavigate, NavLink } from 'react-router-dom';
+import InputAdornment from '@mui/material/InputAdornment';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+// import IconButton from '@mui/material/IconButton';
 
 import { useDispatch } from 'react-redux';
 import { fetchUserToken } from '../../redux/slices/authorization';
@@ -22,6 +26,7 @@ function LogInPage() {
 
   const [passError, setPassError] = useState([]);
   const [status, setStatus] = useState(false);
+  const [togglePassword, setTogglePassword] = useState(false);
 
   const onSubmit = async values => {
     setStatus(true);
@@ -91,20 +96,24 @@ function LogInPage() {
     }
   };
 
+  const toggleData = () => {
+    setTogglePassword(!togglePassword);
+  };
+
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
-    defaultValues: {
-      loginOrEmail: 'test@test.ua',
-      password: '1234567',
-    },
+    // defaultValues: {
+    //   loginOrEmail: 'test@test.ua',
+    //   password: '1234567',
+    // },
     mode: 'onChange',
   });
 
   return (
-    <div className={style.logInBcgr}>
+    <div className={style.logInBcgr} data-testid="loginPage">
       <Paper className={style.logInPage} elevation={0}>
         <Typography
           className={style.title}
@@ -126,9 +135,30 @@ function LogInPage() {
             className={style.field}
             label="Password"
             fullWidth
+            type={!togglePassword ? 'password' : 'text'}
             error={Boolean(errors.password?.message)}
             helperText={errors.password?.message}
             {...register('password', { required: 'Enter your password' })}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  {' '}
+                  {togglePassword ? (
+                    <VisibilityIcon
+                      data-testid="visibilityToggle"
+                      className={style.cursor_pointer}
+                      onClick={toggleData}
+                    />
+                  ) : (
+                    <VisibilityOffIcon
+                      data-testid="visibilityOffToggle"
+                      className={style.cursor_pointer}
+                      onClick={toggleData}
+                    />
+                  )}
+                </InputAdornment>
+              ),
+            }}
           />
           <div
             className={

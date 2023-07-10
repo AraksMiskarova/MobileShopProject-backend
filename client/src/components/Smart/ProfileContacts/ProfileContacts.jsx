@@ -8,7 +8,7 @@ import { updateFormStatus } from '../../../redux/slices/checkout';
 import { isAuthenticated } from '../../../helpers/authentication/authentication';
 import {
   customerState,
-  fetchNewCustomerData,
+  fetchCustomerData,
 } from '../../../redux/slices/customer';
 import ButtonDark from '../../UI/Buttons/ButtonDark/ButtonDark';
 
@@ -52,7 +52,7 @@ function ProfileContacts() {
         customer.email === values.email,
     );
     if (!newDataBool && isFormValid) {
-      dispatch(fetchNewCustomerData(values));
+      dispatch(fetchCustomerData(values));
     }
 
     return null;

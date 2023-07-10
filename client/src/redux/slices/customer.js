@@ -1,7 +1,7 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from '../../axios';
-import { fetchData } from '../../helpers/toolkit/fetches';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import api from '../../helpers/toolkit/api';
 import { createAsyncReducer } from '../../helpers/toolkit/extraReducers';
+import { fetchData } from '../../helpers/toolkit/fetches';
 
 export const fetchCustomerData = createAsyncThunk(
   'customer/fetchCustomer',
@@ -10,24 +10,16 @@ export const fetchCustomerData = createAsyncThunk(
   },
 );
 
-export const fetchNewCustomerData = createAsyncThunk(
-  'customer/fetchNewCustomer',
-  async params => {
-    try {
-      const { data } = await axios.put('/api/customers', params, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      return data;
-    } catch (error) {
-      return error;
-    }
-  },
-);
+export const getCustomers = createAsyncThunk('customers', async () => {
+  // eslint-disable-next-line no-return-await
+  return await api.get('api/customers').then(response => {
+    return response.data;
+  });
+});
 
 const initialState = {
   customer: null,
+  customers: null,
   status: 'loading',
 };
 
@@ -48,20 +40,15 @@ const customerSlice = createSlice({
         fetchCustomerData.rejected,
         createAsyncReducer('customer').rejected,
       )
+      .addCase(getCustomers.pending, createAsyncReducer('customers').pending)
       .addCase(
-        fetchNewCustomerData.pending,
-        createAsyncReducer('customer').pending,
+        getCustomers.fulfilled,
+        createAsyncReducer('customers').fulfilled,
       )
-      .addCase(
-        fetchNewCustomerData.fulfilled,
-        createAsyncReducer('customer').fulfilled,
-      )
-      .addCase(
-        fetchNewCustomerData.rejected,
-        createAsyncReducer('customer').rejected,
-      );
+      .addCase(getCustomers.rejected, createAsyncReducer('customers').rejected);
   },
 });
 
 export const customerState = state => state.customer;
+export const customersState = state => state.customers;
 export const customerReducer = customerSlice.reducer;
