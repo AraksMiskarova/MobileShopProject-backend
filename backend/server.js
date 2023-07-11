@@ -24,11 +24,9 @@ const shippingMethods = require("./routes/shippingMethods");
 const paymentMethods = require("./routes/paymentMethods");
 const partners = require("./routes/partners");
 // const mainRoute = require('./routes/index');
-const cors = require("cors");
 
 const app = express();
 
-app.use(cors());
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
