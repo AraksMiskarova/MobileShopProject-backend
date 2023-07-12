@@ -134,6 +134,7 @@ exports.loginCustomer = async (req, res, next) => {
 
           return res.json({
             success: true,
+            token: "Bearer " + token,
             refreshToken: refreshToken,
           });
         } else {
