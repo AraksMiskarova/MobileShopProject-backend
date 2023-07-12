@@ -134,7 +134,7 @@ exports.loginCustomer = async (req, res, next) => {
 
           // Set the JWT token as a cookie
           res.cookie("token", token, {
-            domain: "mobileshop.onrender.com",
+            domain: "mobileshop-api.onrender.com",
             httpOnly: true,
           });
 
