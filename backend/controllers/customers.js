@@ -132,12 +132,6 @@ exports.loginCustomer = async (req, res, next) => {
             expiresIn: 2678400,
           });
 
-          // Set the JWT token as a cookie
-          res.cookie("token", token, {
-            domain: "mobileshop-api.onrender.com",
-            httpOnly: true,
-          });
-
           return res.json({
             success: true,
             refreshToken: refreshToken,
